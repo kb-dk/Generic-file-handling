@@ -32,7 +32,7 @@ public class ResponseMessage implements ResponseMessageInterface{
     }
 
     @Override public ResponseCode setResponseCode(ResponseCode responseCode) {
-        if(this.responseCode.equals(null)){
+        if(this.responseCode == null){
             return this.responseCode = responseCode;
         }
         return this.responseCode;
