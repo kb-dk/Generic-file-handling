@@ -11,9 +11,9 @@
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
   <scm>
-    <url>https://github.com/kb-dk/Generic-file-handling</url>
-    <connection>scm:git:https://github.com/kb-dk/Generic-file-handling.git</connection>
-    <developerConnection>scm:git:git@github.com:kb-dk/Generic-file-handling.git</developerConnection>
+    <url>https://github.com/kb-dk/Generic-file-handling/tree/master/filehandling</url>
+    <connection>scm:git:https://github.com/kb-dk/Generic-file-handling/tree/master/filehandling.git</connection>
+    <developerConnection>scm:git:git@github.com:kb-dk/Generic-file-handling/tree/master/filehandling.git</developerConnection>
     <tag>filehandling-1.0.0</tag>
   </scm>
   <properties>
