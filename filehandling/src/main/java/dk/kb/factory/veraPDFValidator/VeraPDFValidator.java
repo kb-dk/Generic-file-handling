@@ -13,7 +13,6 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
-//import pdfValidator.messages.ValidationMessages;
 
 import java.io.File;
 import java.util.ArrayList;
