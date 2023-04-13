@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <groupId>org.sbforge</groupId>
-    <artifactId>sbforge-parent</artifactId>
-    <version>22</version>
-  </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>dk.kb.filehandling</groupId>
   <artifactId>filehandling</artifactId>
-  <version>1.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+
   <name>filehandling</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
   <scm>
-    <url>https://github.com/kb-dk/Generic-file-handling/tree/master/filehandling</url>
-    <connection>scm:git:https://github.com/kb-dk/Generic-file-handling/tree/master/filehandling.git</connection>
-    <developerConnection>scm:git:git@github.com:kb-dk/Generic-file-handling/tree/master/filehandling.git</developerConnection>
+    <url>https://github.com/kb-dk/Generic-file-handling</url>
+    <connection>scm:git:https://github.com/kb-dk/Generic-file-handling.git</connection>
+    <developerConnection>scm:git:git@github.com:kb-dk/Generic-file-handling.git</developerConnection>
     <tag>filehandling-1.0.0</tag>
   </scm>
   <properties>
