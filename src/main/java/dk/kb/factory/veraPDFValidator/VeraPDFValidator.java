@@ -10,7 +10,9 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.gf.model.GFModelParser;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
@@ -69,7 +71,7 @@ public class VeraPDFValidator extends FileHandling{
             responseMessage.setResponseCode(ResponseCode.ERROR);
             for (FeatureTreeNode embedded : pdfEmbeddedFiles) {
                 for (FeatureTreeNode metaData : embedded.getChildren()) {
-                    responseMessage.addMessage("Contains embedded file", metaData.getName() + " " + metaData.getValue());
+                    responseMessage.addMessage(metaData.getName(), metaData.getName() + " " + metaData.getValue());
                 }
             }
         }
@@ -83,11 +85,10 @@ public class VeraPDFValidator extends FileHandling{
             responseMessage.setResponseCode(ResponseCode.SUCCESS);
         } else {
             responseMessage.setResponseCode(ResponseCode.ERROR);
-            Map<RuleId, Integer> failedChecks = validationResult.getFailedChecks();
-
-            for (Map.Entry<RuleId, Integer> entry : failedChecks.entrySet()) {
-                responseMessage.addMessage(entry.getKey().toString(), entry.getValue().toString());
+            for (TestAssertion assertion:validationResult.getTestAssertions()) {
+                responseMessage.addMessage(assertion.getRuleId().getClause(),assertion.getMessage());
             }
+
         }
         return responseMessage;
     }
