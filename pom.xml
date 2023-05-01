@@ -7,18 +7,22 @@
     <artifactId>sbforge-parent</artifactId>
     <version>22</version>
   </parent>
+
   <groupId>dk.kb.filehandling</groupId>
   <artifactId>filehandling</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
+
   <name>filehandling</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
+
   <scm>
     <url>https://github.com/kb-dk/Generic-file-handling</url>
     <connection>scm:git:https://github.com/kb-dk/Generic-file-handling.git</connection>
     <developerConnection>scm:git:git@github.com:kb-dk/Generic-file-handling.git</developerConnection>
     <tag>filehandling-1.0.0</tag>
   </scm>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
@@ -42,5 +46,11 @@
       <artifactId>validation-model</artifactId>
       <version>1.22.2</version>
     </dependency>
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <version>RELEASE</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 </project>

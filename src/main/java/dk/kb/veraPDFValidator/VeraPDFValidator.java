@@ -1,6 +1,5 @@
-package dk.kb.factory.veraPDFValidator;
+package dk.kb.veraPDFValidator;
 
-import dk.kb.factory.FileHandling;
 import dk.kb.responseMessage.ResponseCode;
 import dk.kb.responseMessage.ResponseMessage;
 import org.verapdf.core.VeraPDFException;
@@ -12,39 +11,30 @@ import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
 
-public class VeraPDFValidator extends FileHandling{
+public class VeraPDFValidator implements ValidatePDF {
 
-    private List<ResponseMessage> responseMessages;
-    public VeraPDFValidator(){
-        this.responseMessages = new ArrayList<>();
-    }
-    @Override public <T> List<ResponseMessage> validateFile(String id, File file, T veraPDFflavour, T validateEmbedded, T validateCompliant) {
-        return validatePDF(id,file,(String)veraPDFflavour,(Boolean)validateEmbedded,(Boolean)validateCompliant);
+    public VeraPDFValidator() {
     }
 
-
+    @Override
     public List<ResponseMessage> validatePDF(String id, File pdfFileToCheck, String validateMode, boolean checkEmbeddedFiles, boolean checkPDF) {
         List<ResponseMessage> responseMessages = new ArrayList<>();
         GFModelParser parser = null;
 
         try {
-
             PDFAFlavour pdfAFlavour = PDFAFlavour.byFlavourId(validateMode);
             parser = GFModelParser.createModelWithFlavour(pdfFileToCheck, pdfAFlavour);
-            if (checkPDF){
+            if (checkPDF) {
                 responseMessages.add(compliantToValidationModeCheck(parser, pdfAFlavour, id));
             }
-            if(checkEmbeddedFiles){
+            if (checkEmbeddedFiles) {
                 responseMessages.add(embeddedPDFFilesCheck(parser, id));
             }
 
@@ -52,6 +42,8 @@ public class VeraPDFValidator extends FileHandling{
             ResponseMessage responseMessage = new ResponseMessage(id);
             responseMessage.setResponseCode(ResponseCode.FAILED);
             responseMessage.addMessage("Unknown Error", "error msg:" + e.getMessage());
+
+            responseMessages.add(responseMessage);
         } finally {
             if (parser != null) {
                 parser.close();
@@ -85,8 +77,8 @@ public class VeraPDFValidator extends FileHandling{
             responseMessage.setResponseCode(ResponseCode.SUCCESS);
         } else {
             responseMessage.setResponseCode(ResponseCode.ERROR);
-            for (TestAssertion assertion:validationResult.getTestAssertions()) {
-                responseMessage.addMessage(assertion.getRuleId().getClause(),assertion.getMessage());
+            for (TestAssertion assertion : validationResult.getTestAssertions()) {
+                responseMessage.addMessage(assertion.getRuleId().getClause(), assertion.getMessage());
             }
 
         }
@@ -95,8 +87,7 @@ public class VeraPDFValidator extends FileHandling{
 
     protected ValidationResult isValidPDF(final GFModelParser parser, final PDFAFlavour flavour) throws VeraPDFException {
         final PDFAValidator validator = ValidatorFactory.createValidator(flavour, false, 1);
-        final ValidationResult result = validator.validate(parser);
-        return result;
+        return validator.validate(parser);
     }
 
     protected List<FeatureTreeNode> checkEmbeddedFiles(GFModelParser parser) {
