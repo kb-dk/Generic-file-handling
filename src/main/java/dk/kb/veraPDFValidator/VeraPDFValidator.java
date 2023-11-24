@@ -14,11 +14,16 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Properties;
 
 public class VeraPDFValidator implements ValidatePDF {
+
+    private String veraPDFValidatorName = "N/A";
+    private String veraPDFValidatorVersionNo = "N/A";
 
     public VeraPDFValidator() {
     }
@@ -67,6 +72,12 @@ public class VeraPDFValidator implements ValidatePDF {
                 }
             }
         }
+
+        responseMessage.setValidatorName(veraPDFValidatorName);
+        responseMessage.setValidatorVersionNo(veraPDFValidatorVersionNo);
+        responseMessage.setArtifactId(getProjectArtifactId());
+        responseMessage.setVersionNo(getProjectVersionNo());
+
         return responseMessage;
     }
 
@@ -80,13 +91,31 @@ public class VeraPDFValidator implements ValidatePDF {
             for (TestAssertion assertion : validationResult.getTestAssertions()) {
                 responseMessage.addMessage(assertion.getRuleId().getClause(), assertion.getMessage());
             }
-
         }
+
+        responseMessage.setValidatorName(veraPDFValidatorName);
+        responseMessage.setValidatorVersionNo(veraPDFValidatorVersionNo);
+        responseMessage.setArtifactId(getProjectArtifactId());
+        responseMessage.setVersionNo(getProjectVersionNo());
+
         return responseMessage;
     }
 
+
+    private String getProjectVersionNo() {
+        final Properties properties = loadProperties();
+        String projectVersionNumber = properties.getProperty("version");
+
+        return validateArtifactOrVersionNo(projectVersionNumber);
+    }
+
+
     protected ValidationResult isValidPDF(final GFModelParser parser, final PDFAFlavour flavour) throws VeraPDFException {
         final PDFAValidator validator = ValidatorFactory.createValidator(flavour, false, 1);
+
+        veraPDFValidatorName = validator.getDetails().getName();
+        veraPDFValidatorVersionNo = validator.getDetails().getVersion();
+
         return validator.validate(parser);
     }
 
@@ -108,6 +137,37 @@ public class VeraPDFValidator implements ValidatePDF {
             }
         };
         return parser.getFeatures(featureExtractorConfig).getFeatureTreesForType(FeatureObjectType.EMBEDDED_FILE);
+    }
+
+
+    private String getProjectArtifactId() {
+        final Properties properties = loadProperties();
+        String projectArtifactId = properties.getProperty("artifactId");
+
+        return validateArtifactOrVersionNo(projectArtifactId);
+    }
+
+    private Properties loadProperties() {
+        final Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return properties;
+    }
+
+    private String validateArtifactOrVersionNo(String value) {
+        String validated = "";
+
+        if ((value == null) || (value.isEmpty())) {
+            validated = "N/A";
+        } else {
+            validated = value;
+        }
+
+        return validated;
     }
 
 }

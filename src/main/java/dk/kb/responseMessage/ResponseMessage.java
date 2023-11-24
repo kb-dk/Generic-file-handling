@@ -10,6 +10,12 @@ public class ResponseMessage implements ResponseMessageInterface {
     private ResponseCode responseCode;
     private final String timeStamp;
 
+    private String artifactId = "N/A";
+    private String versionNo = "N/A";
+    private String validatorVersionNo = "N/A";
+    private String validatorName = "N/A";
+
+
     public ResponseMessage(String id) {
         this.id = id;
         this.message = new HashMap<>();
@@ -40,8 +46,39 @@ public class ResponseMessage implements ResponseMessageInterface {
         return this.responseCode;
     }
 
+    @Override
+    public String getArtifactId() {
+        return this.artifactId;
+    }
+
+    @Override
+    public String getVersionNo() {
+        return this.versionNo;
+    }
 
     @Override public String getTimeStamp() {
         return this.timeStamp;
     }
+
+    public void setArtifactId(String artifactId) {
+        this.artifactId = artifactId;
+    }
+
+    public void setVersionNo(String versionNo) {
+        this.versionNo = versionNo;
+    }
+
+    public void setValidatorVersionNo(String validatorVersionNo) {
+        this.validatorVersionNo = validatorVersionNo;
+    }
+
+    public void setValidatorName(String validatorName) {
+        this.validatorName = validatorName;
+    }
+
+    @Override
+    public String getValidatorInfo() {
+        return this.validatorName + " " + this.validatorVersionNo;
+    }
+
 }
