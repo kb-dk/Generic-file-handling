@@ -9,5 +9,9 @@ public interface ResponseMessageInterface {
     public ResponseCode getResponseCode();
     public ResponseCode setResponseCode(ResponseCode responseCode);
 
+    public String getArtifactId();
+    public String getVersionNo();
+    public String getValidatorInfo();
+
     public String getTimeStamp();
 }
