@@ -150,7 +150,7 @@ public class VeraPDFValidator implements ValidatePDF {
     private Properties loadProperties() {
         final Properties properties = new Properties();
         try {
-            properties.load(this.getClass().getClassLoader().getResourceAsStream("project.properties"));
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("filehandling.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
