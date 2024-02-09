@@ -47,7 +47,8 @@ public class VeraPDFValidator implements ValidatePDF {
             ResponseMessage responseMessage = new ResponseMessage(id);
             responseMessage.setResponseCode(ResponseCode.FAILED);
             responseMessage.addMessage("Unknown Error", "error msg:" + e.getMessage());
-
+            responseMessage.setArtifactId(getProjectArtifactId());
+            responseMessage.setVersionNo(getProjectVersionNo());
             responseMessages.add(responseMessage);
         } finally {
             if (parser != null) {

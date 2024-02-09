@@ -1,5 +1,6 @@
 package dk.kb.filehandling;
 
+import dk.kb.responseMessage.ResponseCode;
 import dk.kb.veraPDFValidator.VeraPDFValidator;
 import dk.kb.responseMessage.ResponseMessage;
 import org.junit.Test;
@@ -56,5 +57,13 @@ public class AppTest {
         List<ResponseMessage> rm = validator.validatePDF("test", pdfFile, "2b", true, true);
 
         assertTrue(rm.get(0).getValidatorInfo().contains("veraPDF PDF/A Validator"));
+    }
+    @Test
+    public void pdfFileUnableToOpen() throws URISyntaxException {
+        File pdfFile = new File(AppTest.class.getClassLoader().getResource("20231201_kristeligtdagblad_section05_page023_krd20231201x15#0023.pdf").toURI().getPath());
+        VeraPDFValidator validator = new VeraPDFValidator();
+        List<ResponseMessage> rm = validator.validatePDF("test", pdfFile, "2b", true, true);
+
+        assertTrue(rm.get(0).getResponseCode().equals(ResponseCode.FAILED));
     }
 }
